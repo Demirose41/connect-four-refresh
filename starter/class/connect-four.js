@@ -33,12 +33,32 @@ class ConnectFour {
   }
 
   static checkWin(grid) {
+    //Horizontal Check
+    if(grid.some((row) => row.filter(x => x == 'X').length >= 4)){
+      return 'X';
+    }
+    if(grid.some((row) => row.filter(x => x == 'O').length >= 4)){
+      return 'O';
+    }
 
-    // Return 'X' if player X wins
-    // Return 'O' if player O wins
+    //Vertical Check
+    let verticalWin = [];
+    for(let i = 0; i < grid[0].length; i ++ ){
+      verticalWin.push(grid.map((row) => row[i]));
+    }
+    if(verticalWin.some((row) => row.filter(x => x == 'X').length >= 4)){
+      return 'X';
+    }
+    if(verticalWin.some((row) => row.filter(x => x == 'O').length >= 4)){
+      return 'O';
+    }
+
+
     // Return 'T' if the game is a tie
     // Return false if the game has not ended
-
+    else{ 
+      return false;
+    }
   }
 
   static endGame(winner) {
