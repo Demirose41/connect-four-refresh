@@ -14,6 +14,15 @@ class Cursor {
 
   }
 
+  pos(){
+    return [this.row, this.col];
+  }
+
+  _printCoord(){
+    console.log(`Row: ${this.row} , Col: ${this.col}`);
+  }
+
+  
   resetBackgroundColor() {
     Screen.setBackgroundColor(this.row, this.col, this.gridColor);
   }

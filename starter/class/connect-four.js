@@ -21,15 +21,53 @@ class ConnectFour {
     Screen.setGridlines(true);
 
     // Replace this with real commands
-    Screen.addCommand('t', 'test command (remove)', ConnectFour.testCommand);
+    Screen.addCommand('w', 'Move Cursor Up', () => this.cursorUp());
+    Screen.addCommand('s', 'Move Cursor Down', () => this.cursorDown());
+    Screen.addCommand('a', 'Move Cursor Left', () => this.cursorLeft());
+    Screen.addCommand('d', 'Move Cursor Right', () => this.cursorRight());
+    Screen.addCommand('x', 'Place X', () => this.placeSymbol("X"));
+    Screen.addCommand('o', 'Place O', () => this.placeSymbol("O"));
 
     this.cursor.setBackgroundColor();
     Screen.render();
   }
 
-  // Remove this
-  static testCommand() {
-    console.log("TEST COMMAND");
+  placeSymbol(symbol){
+    if(ConnectFour.checkWin(Screen.grid) == false){
+      const currentPos = this.cursor.pos();
+      Screen.setGrid(currentPos[0], currentPos[1], symbol);
+      Screen.render();
+      this.cursor._printCoord();
+      Screen.printCommands();
+    }else{
+      ConnectFour.endGame(ConnectFour.checkWin(Screen.grid))
+    }
+  }
+  // Cursor Movement
+  cursorUp() {
+    this.cursor.up();
+    Screen.render();
+    // this.cursor._printCoord()
+    Screen.printCommands();
+  }
+  cursorDown() {
+    this.cursor.down();
+    Screen.render();
+    // this.cursor._printCoord()
+    Screen.printCommands();
+  }
+  cursorLeft() {
+    this.cursor.left();
+    Screen.render();
+    // this.cursor._printCoord()
+    Screen.printCommands();
+  }
+
+  cursorRight() {
+    this.cursor.right();
+    Screen.render();
+    // this.cursor._printCoord()
+    Screen.printCommands();
   }
 
   static checkWin(grid) {
