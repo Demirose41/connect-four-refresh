@@ -34,27 +34,66 @@ class ConnectFour {
 
   static checkWin(grid) {
     //Horizontal Check
-    if(grid.some((row) => row.filter(x => x == 'X').length >= 4)){
+    let horizontalWin = []
+    for(let i = 0; i < grid.length ; i++){
+      for(let j = 0; j < grid[0].length - 3; j++){
+        horizontalWin.push([grid[i][j], grid[i][j+1], grid[i][j+2], grid[i][j+3]])
+      };
+    }
+    
+    if(horizontalWin.some((row) => row.filter(x => x == 'X').length >= 4)){
       return 'X';
     }
-    if(grid.some((row) => row.filter(x => x == 'O').length >= 4)){
+    if(horizontalWin.some((row) => row.filter(x => x == 'O').length >= 4)){
       return 'O';
     }
 
     //Vertical Check
     let verticalWin = [];
-    for(let i = 0; i < grid[0].length; i ++ ){
-      verticalWin.push(grid.map((row) => row[i]));
+    for(let i = 0; i < grid.length - 3; i++){
+      for(let j = 0; j < grid[0].length; j++){
+        verticalWin.push([grid[i][j], grid[i+1][j], grid[i+2][j], grid[i+3][j]])
+      };
     }
+    
     if(verticalWin.some((row) => row.filter(x => x == 'X').length >= 4)){
       return 'X';
     }
     if(verticalWin.some((row) => row.filter(x => x == 'O').length >= 4)){
       return 'O';
     }
-
-
+    //Diagonal Check
+    let leftToRightDiagonal = [];
+    let rightToLeftDiagonal = [];
+    let reversedGrid = [...grid].reverse()
+    for(let i = 0; i < grid.length - 3; i++){
+      for(let j = 0; j < grid[0].length - 3; j++){
+        leftToRightDiagonal.push([grid[i][j], grid[i+1][j+1], grid[i+2][j+2], grid[i+3][j+3]])
+      };
+    }
+    for(let i = 0; i < grid.length - 3; i++){
+      for(let j = 0; j < grid[0].length - 3; j++){
+        leftToRightDiagonal.push([reversedGrid[i][j], reversedGrid[i+1][j+1], reversedGrid[i+2][j+2], reversedGrid[i+3][j+3]])
+      };
+    }
+    // console.log(leftToRightDiagonal);
+    // console.log(grid);
+    if(leftToRightDiagonal.some((row) => row.filter(x => x == 'X').length >= 4)){
+      return 'X';
+    }
+    if(leftToRightDiagonal.some((row) => row.filter(x => x == 'O').length >= 4)){
+      return 'O';
+    }
+    if(rightToLeftDiagonal.some((row) => row.filter(x => x == 'X').length >= 4)){
+      return 'X';
+    }
+    if(rightToLeftDiagonal.some((row) => row.filter(x => x == 'O').length >= 4)){
+      return 'O';
+    }
     // Return 'T' if the game is a tie
+    if (grid.every((row) => row.every((ele) => ele == 'X' || ele == 'O'))){
+      return 'T';
+    }
     // Return false if the game has not ended
     else{ 
       return false;
